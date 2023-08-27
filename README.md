@@ -1,11 +1,11 @@
 # YaCut
 
 ### Description
-This is a URL shortener service written on Python with Flask framework
+This is a URL-shortener service written on Python with Flask framework
 
 ### Quick Start
 1. Clone repo
-```python
+```bash
 git clone git@github.com:Evgeniy-Golodnykh/yacut.git
 ```
 2. Creates a virtual environment
@@ -21,7 +21,14 @@ source venv/bin/activate
 python3 -m pip install --upgrade pip
 python3 -m pip install -r requirements.txt
 ```
-5. To run the application use command
+5. Configure the .env file like this
+```python
+FLASK_APP=yacut
+FLASK_ENV=development
+DATABASE_URI=sqlite:///yacut_db.sqlite3
+SECRET_KEY='YOUR_SECRET_KEY'
+```
+6. To run the application use command
 ```python
 flask run
 ```

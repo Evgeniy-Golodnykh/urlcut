@@ -5,13 +5,12 @@ from wtforms.validators import URL, DataRequired, Length, Optional, Regexp
 from settings import SHORT_ID_MAX_LENGTH, SHORT_ID_REGEXP, URL_MAX_LENGTH
 
 from .error_handlers import ValidationError
-from .models import URLMap
+from .models import SHORT_ID_EXIST_MESSAGE, URLMap
 
 ORIGINAL_URL_LABLE = 'Длинная ссылка'
 SHORT_ID_LABLE = 'Ваш вариант короткой ссылки'
 SUBMIT_LABLE = 'Создать'
 REQUIRED_MESSAGE = 'Обязательное поле'
-SHROT_ID_EXIST_MESSAGE = 'Имя {short_id} уже занято!'
 
 
 class URLForm(FlaskForm):
@@ -35,7 +34,7 @@ class URLForm(FlaskForm):
 
     def validate_custom_id(self, custom_id):
         short_id = custom_id.data
-        if URLMap.query.filter_by(short=short_id).first():
+        if URLMap.get(short_id):
             raise ValidationError(
-                SHROT_ID_EXIST_MESSAGE.format(short_id=short_id)
+                SHORT_ID_EXIST_MESSAGE.format(short=short_id)
             )

@@ -42,32 +42,32 @@ class URLMap(db.Model):
             short_id = ''.join(
                 choices(ALLOWED_SYMBOLS, k=SHORT_ID_GENERATION_LENGTH)
             )
-            if not URLMap.get_urlmap_instance(short_id):
+            if not URLMap.get(short_id):
                 return short_id
         raise LinkCreationError(SHORT_ID_CREATION_ERROR_MESSAGE)
 
     @staticmethod
-    def get_urlmap_instance(short):
+    def get(short):
         return URLMap.query.filter_by(short=short).first()
 
     @staticmethod
-    def create_urlmap_instance(original, short):
+    def create(original, short):
         if len(original) > URL_MAX_LENGTH or not url_validator(original):
             raise ValidationError(WRONG_URL_MESSAGE)
         if short:
             if (len(short) > SHORT_ID_MAX_LENGTH or
                not re.match(SHORT_ID_REGEXP, short)):
                 raise ValidationError(WRONG_SHORT_ID_MESSAGE)
-            if URLMap.get_urlmap_instance(short):
+            if URLMap.get(short):
                 raise ShortExistError(
                     SHORT_ID_EXIST_MESSAGE.format(short=short)
                 )
         else:
             short = URLMap.get_unique_short_id()
-        urlmap = URLMap(original=original, short=short)
-        db.session.add(urlmap)
+        url_map = URLMap(original=original, short=short)
+        db.session.add(url_map)
         db.session.commit()
-        return urlmap
+        return url_map
 
 
 def url_validator(url):

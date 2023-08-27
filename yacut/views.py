@@ -1,5 +1,7 @@
 from flask import abort, flash, redirect, render_template, url_for
 
+from settings import REDIRECT_FUNCTION_NAME
+
 from . import app
 from .error_handlers import LinkCreationError, ValidationError
 from .forms import URLForm
@@ -12,29 +14,24 @@ def index_view():
     try:
         if not form.validate_on_submit():
             return render_template('index.html', form=form)
-        urlmap = URLMap.create_urlmap_instance(
-            original=form.original_link.data,
-            short=form.custom_id.data,
-        )
+        url_map = URLMap.create(form.original_link.data, form.custom_id.data)
         return render_template(
             'index.html',
             form=form,
             link=url_for(
-                redirect_url.__name__,
-                short_id=urlmap.short,
+                REDIRECT_FUNCTION_NAME,
+                short_id=url_map.short,
                 _external=True
             )
         )
-    except ValidationError as error:
-        flash(error.message)
-    except LinkCreationError as error:
+    except (ValidationError, LinkCreationError) as error:
         flash(error.message)
     return render_template('index.html', form=form)
 
 
 @app.route('/<string:short_id>', methods=['GET'])
 def redirect_url(short_id):
-    urlmap = URLMap.get_urlmap_instance(short_id)
-    if not urlmap:
+    url_map = URLMap.get(short_id)
+    if not url_map:
         abort(404)
-    return redirect(urlmap.original)
+    return redirect(url_map.original)

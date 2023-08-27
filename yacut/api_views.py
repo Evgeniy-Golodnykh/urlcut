@@ -19,22 +19,19 @@ def add_url():
         raise InvalidAPIUsage(EMPTY_REQUEST_MESSAGE)
     if 'url' not in data:
         raise InvalidAPIUsage(EMPTY_URL_MESSAGE)
-    original_url = data.get('url')
     short_id = data.get('custom_id', None)
     try:
-        urlmap = URLMap.create_urlmap_instance(original_url, short_id)
+        url_map = URLMap.create(data.get('url'), short_id)
     except ShortExistError:
         raise InvalidAPIUsage(SHORT_ID_EXIST_MESSAGE.format(short_id=short_id))
-    except ValidationError as error:
+    except (ValidationError, LinkCreationError) as error:
         raise InvalidAPIUsage(error.message)
-    except LinkCreationError as error:
-        raise InvalidAPIUsage(error.message)
-    return jsonify(urlmap.to_dict()), 201
+    return jsonify(url_map.to_dict()), 201
 
 
 @app.route('/api/id/<string:short_id>/', methods=['GET'])
 def get_short_link(short_id):
-    urlmap = URLMap.get_urlmap_instance(short_id)
-    if urlmap is None:
+    url_map = URLMap.get(short_id)
+    if url_map is None:
         raise InvalidAPIUsage(EMPTY_SHORT_ID_MESSAGE, 404)
-    return jsonify({'url': urlmap.original}), 200
+    return jsonify({'url': url_map.original}), 200
