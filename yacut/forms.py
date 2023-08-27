@@ -11,7 +11,7 @@ ORIGINAL_URL_LABLE = 'Длинная ссылка'
 SHORT_ID_LABLE = 'Ваш вариант короткой ссылки'
 SUBMIT_LABLE = 'Создать'
 REQUIRED_MESSAGE = 'Обязательное поле'
-SHROT_ID_EXIST_ERROR_MESSAGE = 'Имя {short_id} уже занято!'
+SHROT_ID_EXIST_MESSAGE = 'Имя {short_id} уже занято!'
 
 
 class URLForm(FlaskForm):
@@ -37,5 +37,5 @@ class URLForm(FlaskForm):
         short_id = custom_id.data
         if URLMap.query.filter_by(short=short_id).first():
             raise ValidationError(
-                SHROT_ID_EXIST_ERROR_MESSAGE.format(short_id=short_id)
+                SHROT_ID_EXIST_MESSAGE.format(short_id=short_id)
             )
