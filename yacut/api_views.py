@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 
 from flask import jsonify, request
 
-from settings import SHORT_LINK_MAX_LENGTH, SHORT_LINK_REGEXP
+from settings import SHORT_ID_MAX_LENGTH, SHORT_ID_REGEXP
 
 from . import app, db
 from .error_handlers import InvalidAPIUsage
@@ -14,7 +14,7 @@ EMPTY_REQUEST_MESSAGE = 'Отсутствует тело запроса'
 EMPTY_URL_MESSAGE = '"url" является обязательным полем!'
 WRONG_URL_MESSAGE = 'Введите корректный URL адрес'
 WRONG_SHORT_LINK_MESSAGE = 'Указано недопустимое имя для короткой ссылки'
-LINK_EXIST_ERROR_MESSAGE = 'Имя "{short_link}" уже занято.'
+LINK_EXIST_ERROR_MESSAGE = 'Имя "{short_id}" уже занято.'
 
 
 def url_validator(url):
@@ -32,18 +32,18 @@ def add_url():
     original_url = data.get('url')
     if not url_validator(original_url):
         raise InvalidAPIUsage(WRONG_URL_MESSAGE)
-    short_link = data.get('custom_id', None)
-    if short_link:
-        if not re.match(SHORT_LINK_REGEXP, short_link) \
-           or len(short_link) > SHORT_LINK_MAX_LENGTH:
+    short_id = data.get('custom_id', None)
+    if short_id:
+        if not re.match(SHORT_ID_REGEXP, short_id) \
+           or len(short_id) > SHORT_ID_MAX_LENGTH:
             raise InvalidAPIUsage(WRONG_SHORT_LINK_MESSAGE)
-        if URLMap.query.filter_by(short=short_link).first():
+        if URLMap.query.filter_by(short=short_id).first():
             raise InvalidAPIUsage(
-                LINK_EXIST_ERROR_MESSAGE.format(short_link=short_link)
+                LINK_EXIST_ERROR_MESSAGE.format(short_id=short_id)
             )
     else:
-        short_link = get_unique_short_id()
-    urlmap = URLMap(original=original_url, short=short_link)
+        short_id = get_unique_short_id()
+    urlmap = URLMap(original=original_url, short=short_id)
     db.session.add(urlmap)
     db.session.commit()
     return jsonify(urlmap.to_dict()), 201

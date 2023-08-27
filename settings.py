@@ -3,10 +3,12 @@ import re
 from string import ascii_letters, digits
 
 ALLOWED_SYMBOLS = ascii_letters + digits
-SHORT_LINK_MAX_LENGTH = 16
-SHORT_LINK_GENERATION_LENGTH = 6
-SHORT_LINK_GENERATION_NUMBER = 20
-SHORT_LINK_REGEXP = re.compile(rf'^[{re.escape(ALLOWED_SYMBOLS)}]+$')
+URL_MAX_LENGTH = 500
+SHORT_ID_MAX_LENGTH = 16
+SHORT_ID_GENERATION_LENGTH = 6
+SHORT_ID_GENERATION_NUMBER = 20
+SHORT_ID_REGEXP = re.compile(rf'^[{re.escape(ALLOWED_SYMBOLS)}]+$')
+REDIRECT_FUNCTION_NAME = 'redirect_url'
 
 
 class Config(object):
