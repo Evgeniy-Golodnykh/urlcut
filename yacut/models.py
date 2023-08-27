@@ -51,19 +51,19 @@ class URLMap(db.Model):
         return URLMap.query.filter_by(short=short).first()
 
     @staticmethod
-    def create(original, short):
-        if len(original) > URL_MAX_LENGTH or not url_validator(original):
-            raise ValidationError(WRONG_URL_MESSAGE)
-        if short:
-            if (len(short) > SHORT_ID_MAX_LENGTH or
-               not re.match(SHORT_ID_REGEXP, short)):
-                raise ValidationError(WRONG_SHORT_ID_MESSAGE)
-            if URLMap.get(short):
-                raise ShortExistError(
-                    SHORT_ID_EXIST_MESSAGE.format(short=short)
-                )
-        else:
-            short = URLMap.get_unique_short_id()
+    def create(original, short, validation=False):
+        if validation:
+            if len(original) > URL_MAX_LENGTH or not url_validator(original):
+                raise ValidationError(WRONG_URL_MESSAGE)
+            if short:
+                if (len(short) > SHORT_ID_MAX_LENGTH or
+                   not re.match(SHORT_ID_REGEXP, short)):
+                    raise ValidationError(WRONG_SHORT_ID_MESSAGE)
+        if short and URLMap.get(short):
+            raise ShortExistError(
+                SHORT_ID_EXIST_MESSAGE.format(short=short)
+            )
+        short = short if short else URLMap.get_unique_short_id()
         url_map = URLMap(original=original, short=short)
         db.session.add(url_map)
         db.session.commit()
