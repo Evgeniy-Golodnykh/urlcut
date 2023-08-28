@@ -24,8 +24,7 @@ python3 -m pip install -r requirements.txt
 5. Configure the .env file like this
 ```bash
 FLASK_APP=urlcut
-FLASK_ENV=development
-DATABASE_URI=sqlite:///yacut_db.sqlite3
+DATABASE_URI=sqlite:///urlcut_db.sqlite3
 SECRET_KEY='YOUR_SECRET_KEY'
 ```
 6. To run the application use command
