@@ -3,6 +3,18 @@ from flask import jsonify, render_template
 from . import app, db
 
 
+class ValidationError(Exception):
+    pass
+
+
+class LinkCreationError(Exception):
+    pass
+
+
+class ShortExistError(Exception):
+    pass
+
+
 class InvalidAPIUsage(Exception):
     status_code = 400
 
@@ -14,18 +26,6 @@ class InvalidAPIUsage(Exception):
 
     def to_dict(self):
         return dict(message=self.message)
-
-
-class ValidationError(Exception):
-    pass
-
-
-class LinkCreationError(Exception):
-    pass
-
-
-class ShortExistError(Exception):
-    pass
 
 
 @app.errorhandler(404)

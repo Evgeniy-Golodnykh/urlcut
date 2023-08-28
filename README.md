@@ -1,4 +1,4 @@
-# YaCut
+# URLCut
 
 ### Description
 This is a URL-shortener service written on Python with Flask framework
@@ -6,7 +6,7 @@ This is a URL-shortener service written on Python with Flask framework
 ### Quick Start
 1. Clone repo
 ```bash
-git clone git@github.com:Evgeniy-Golodnykh/yacut.git
+git clone git@github.com:Evgeniy-Golodnykh/urlcut.git
 ```
 2. Creates a virtual environment
 ```bash
@@ -23,16 +23,12 @@ python3 -m pip install -r requirements.txt
 ```
 5. Configure the .env file like this
 ```bash
-FLASK_APP=yacut
+FLASK_APP=urlcut
 FLASK_ENV=development
 DATABASE_URI=sqlite:///yacut_db.sqlite3
 SECRET_KEY='YOUR_SECRET_KEY'
 ```
-6. To create database use command
-```bash
-flask db upgrade
-```
-7. To run the application use command
+6. To run the application use command
 ```bash
 flask run
 ```

@@ -10,3 +10,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 from . import api_views, error_handlers, views
+from .models import URLMap
+
+with app.app_context():
+    db.create_all()
