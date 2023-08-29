@@ -12,10 +12,12 @@ from settings import (
 )
 
 from . import db
-from .error_handlers import LinkCreationError, ShortExistError, ValidationError
+from .error_handlers import (
+    LinkCreationError, ShortIdExistError, ValidationError,
+)
 
 SHORT_ID_CREATION_ERROR_MESSAGE = 'Ошибка создания короткой ссылки'
-SHORT_ID_EXIST_MESSAGE = 'Имя {short} уже занято!'
+SHORT_ID_EXIST_MESSAGE = 'Имя {short} уже занято'
 WRONG_URL_MESSAGE = 'Введите корректный URL адрес'
 WRONG_SHORT_ID_MESSAGE = 'Указано недопустимое имя для короткой ссылки'
 
@@ -60,7 +62,7 @@ class URLMap(db.Model):
                    not re.match(SHORT_ID_REGEXP, short)):
                     raise ValidationError(WRONG_SHORT_ID_MESSAGE)
         if short and URLMap.get(short):
-            raise ShortExistError(
+            raise ShortIdExistError(
                 SHORT_ID_EXIST_MESSAGE.format(short=short)
             )
         short = short if short else URLMap.get_unique_short_id()

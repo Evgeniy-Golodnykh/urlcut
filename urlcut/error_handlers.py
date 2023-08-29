@@ -11,7 +11,7 @@ class LinkCreationError(Exception):
     pass
 
 
-class ShortExistError(Exception):
+class ShortIdExistError(Exception):
     pass
 
 

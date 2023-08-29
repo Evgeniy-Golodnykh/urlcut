@@ -3,7 +3,9 @@ from flask import abort, flash, redirect, render_template, url_for
 from settings import REDIRECT_FUNCTION_NAME
 
 from . import app
-from .error_handlers import LinkCreationError, ShortExistError, ValidationError
+from .error_handlers import (
+    LinkCreationError, ShortIdExistError, ValidationError,
+)
 from .forms import URLForm
 from .models import URLMap
 
@@ -24,7 +26,7 @@ def index_view():
                 _external=True
             )
         )
-    except (ValidationError, LinkCreationError, ShortExistError) as error:
+    except (ValidationError, LinkCreationError, ShortIdExistError) as error:
         flash(str(error))
     return render_template('index.html', form=form)
 
