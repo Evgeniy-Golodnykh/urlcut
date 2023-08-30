@@ -42,8 +42,8 @@ Endpoint: "{your_local_host}:5000/api/id/{custom_id}/"
 Method: POST
 Endpoint: "{your_local_host}:5000/api/id/"
 Request: {
-    "url": "string",
-    "custom_id": "string" # not required
+    "url": "string",         # required
+    "custom_id": "string"    # not required
 }
 ```
 
