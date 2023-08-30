@@ -32,6 +32,21 @@ SECRET_KEY='YOUR_SECRET_KEY'
 flask run
 ```
 
+### API
+```bash
+# Endpoint to retrieve the original URL
+Method: GET
+Endpoint: "your_local_host:5000/api/id/{short_id}/"
+
+# Endpoint to create a short link
+Method: POST
+Endpoint: "your_local_host:5000/api/id/"
+Request: {
+    "url": "string",
+    "custom_id": "string", # not required
+}
+```
+
 ### Technology
 [Python](https://www.python.org), [Flask](https://flask.palletsprojects.com), [SQLAlchemy](https://www.sqlalchemy.org)
 
