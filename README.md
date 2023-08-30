@@ -36,14 +36,14 @@ flask run
 ```bash
 # Endpoint to retrieve the original URL
 Method: GET
-Endpoint: "your_local_host:5000/api/id/{short_id}/"
+Endpoint: "{your_local_host}:5000/api/id/{custom_id}/"
 
 # Endpoint to create a short link
 Method: POST
-Endpoint: "your_local_host:5000/api/id/"
+Endpoint: "{your_local_host}:5000/api/id/"
 Request: {
     "url": "string",
-    "custom_id": "string", # not required
+    "custom_id": "string" # not required
 }
 ```
 
