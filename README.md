@@ -25,7 +25,7 @@ python3 -m pip install -r requirements.txt
 ```bash
 FLASK_APP=urlcut
 DATABASE_URI=sqlite:///urlcut_db.sqlite3
-SECRET_KEY='YOUR_SECRET_KEY'
+SECRET_KEY=YOUR_SECRET_KEY
 ```
 6. To run the application use command
 ```bash
