@@ -4,7 +4,7 @@
 This is a URL-shortener service written on Python with Flask framework
 
 ### Quick Start
-1. Clone repo
+1. Clone the repository
 ```bash
 git clone git@github.com:Evgeniy-Golodnykh/urlcut.git
 ```
